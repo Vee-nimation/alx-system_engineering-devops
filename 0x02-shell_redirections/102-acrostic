@@ -1,2 +1,0 @@
-#!/bin/bash
-echo -ne $(cut -c- q | tr -d n)n
