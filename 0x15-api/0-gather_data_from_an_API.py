@@ -1,35 +1,31 @@
 #!/usr/bin/python3
-"""Python script that, using this REST API, for a given employee ID, returns
-information about his/her TODO list progress."""
+"""Accessing a REST API for todo lists of employees"""
 
 import requests
 import sys
 
 
-if __name__ == "__main__":
-    usr_id = sys.argv[1]
-    url_user = 'https://jsonplaceholder.typicode.com/users/' + usr_id
-    user_json = requests.get(url_user)
-    user_dict = user_json.json()
+if __name__ == '__main__':
+    employeeId = sys.argv[1]
+    baseUrl = "https://jsonplaceholder.typicode.com/users"
+    url = baseUrl + "/" + employeeId
 
-    url_todos =\
-        'https://jsonplaceholder.typicode.com/todos?userId=' + usr_id
-    todos_json = requests.get(url_todos)
-    todos_dict = todos_json.json()
+    response = requests.get(url)
+    employeeName = response.json().get('name')
 
-    tasks_c = 0
-    completed_c = 0
-    title_list = []
-    for task in todos_dict:
-        if task['completed'] is True:
-            completed_c += 1
-            title_list.append(task.get('title'))
-        tasks_c += 1
+    todoUrl = url + "/todos"
+    response = requests.get(todoUrl)
+    tasks = response.json()
+    done = 0
+    done_tasks = []
 
-    print("Employee {} is done with tasks:({}/{}):".
-          format(user_dict.get('name'),
-                 completed_c,
-                 tasks_c))
+    for task in tasks:
+        if task.get('completed'):
+            done_tasks.append(task)
+            done += 1
 
-    for title in title_list:
-        print("\t {}".format(title))
+    print("Employee {} is done with tasks({}/{}):"
+          .format(employeeName, done, len(tasks)))
+
+    for task in done_tasks:
+        print("\t {}".format(task.get('title')))
