@@ -41,7 +41,7 @@ frontend http
          default_backend web-backend
 
 frontend www-https
-	 bind *:443 ssl crt /etc/haproxy/ssl/www.dave-develop.tech.pem
+	 bind *:443 ssl crt /etc/haproxy/ssl/www.veenimation.tech.pem
          reqadd X-Forwarded-Proto:\ https
          default_backend web-backend
 
