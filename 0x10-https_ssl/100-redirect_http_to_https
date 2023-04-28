@@ -41,12 +41,12 @@ frontend http
          default_backend web-backend
 
 frontend www-https
-	 bind *:443 ssl crt /etc/haproxy/ssl/www.dave-develop.tech.pem
+	 bind *:443 ssl crt /etc/haproxy/ssl/www.veenimation.tech.pem
          reqadd X-Forwarded-Proto:\ https
          default_backend web-backend
 
 backend web-backend
 	redirect scheme https if !{ ssl_fc }
         balance roundrobin
-        server 924-web-01 34.74.113.207:80 check
-        server 924-web-02 35.227.64.73:80 check
+        server 152535-web-01 54.236.47.87 check
+        server 152535-web-02 35.168.1.59 check
